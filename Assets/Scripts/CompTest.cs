@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CompTestEvent : EventMgr.Event { }
+public class CompTestEvent { }
 
 public class CompTest : MonoBehaviour
 {

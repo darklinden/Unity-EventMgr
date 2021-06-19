@@ -6,11 +6,23 @@ public class Test : MonoBehaviour
     private void Start()
     {
         EventMgr.AddListener<DataInstanceChangedEvent>(OnDataInstanceChangedEvent);
+        EventMgr.AddListener<DataInstanceChangedEvent>(DataInstance.DataInstanceData0Changed, OnDataInstanceData0);
+        EventMgr.AddListener<DataInstanceChangedEvent>(DataInstance.DataInstanceData1Changed, OnDataInstanceData1);
     }
 
     private void OnDataInstanceChangedEvent(DataInstanceChangedEvent e)
     {
         D.Log("Test.OnDataInstanceChangedEvent", e.data);
+    }
+
+    private void OnDataInstanceData0(DataInstanceChangedEvent e)
+    {
+        D.Log("Test.OnDataInstanceData0", e.data);
+    }
+
+    private void OnDataInstanceData1(DataInstanceChangedEvent e)
+    {
+        D.Log("Test.OnDataInstanceData1", e.data);
     }
 
     public void zzStaticTest()
@@ -45,11 +57,16 @@ public class Test : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        DataInstance.Instance.data = null;
+        DataInstance.Instance.data0 = null;
+        DataInstance.Instance.data1 = null;
 
         yield return new WaitForSeconds(1);
 
-        EventMgr.Trigger(new DataInstanceShouldChangeEvent { data = "hello" });
+        EventMgr.Trigger(new DataInstanceShouldChangeEvent { key = "data0", data = "hello" });
+
+        yield return new WaitForSeconds(1);
+
+        EventMgr.Trigger(new DataInstanceShouldChangeEvent { key = "data1", data = "hello" });
 
         yield return new WaitForSeconds(1);
 
@@ -57,15 +74,16 @@ public class Test : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        EventMgr.Trigger(new DataInstanceShouldChangeEvent { data = "hello" });
+        EventMgr.Trigger(new DataInstanceShouldChangeEvent { key = "data0", data = "hello" });
 
         yield return new WaitForSeconds(1);
 
-        DataInstance.Instance.data = null;
+        DataInstance.Instance.data0 = null;
+        DataInstance.Instance.data1 = null;
 
         yield return new WaitForSeconds(1);
 
-        EventMgr.Trigger(new DataInstanceShouldChangeEvent { data = "world" });
+        EventMgr.Trigger(new DataInstanceShouldChangeEvent { key = "data1", data = "world" });
 
         yield return new WaitForSeconds(1);
 

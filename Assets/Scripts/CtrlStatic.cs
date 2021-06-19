@@ -1,6 +1,6 @@
 using System;
 
-public class CtrlStaticEvent : EventMgr.Event { }
+public class CtrlStaticEvent { }
 
 public static class CtrlStatic
 {
